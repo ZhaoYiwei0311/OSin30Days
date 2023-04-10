@@ -1,0 +1,1 @@
+ dd if=/dev/zero of=helloos.img count=1474560 bs=1
