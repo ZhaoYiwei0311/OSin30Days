@@ -1,4 +1,4 @@
-/* ‘¼‚Ìƒtƒ@ƒCƒ‹‚Åì‚Á‚½ŠÖ”‚ª‚ ‚è‚Ü‚·‚ÆCƒRƒ“ƒpƒCƒ‰‚É‹³‚¦‚é */
+/* ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ä½œã£ãŸé–¢æ•°ãŒã‚ã‚Šã¾ã™ã¨Cã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã«æ•™ãˆã‚‹ */
 #include <stdio.h>
 #define COL8_000000     0
 #define COL8_FF0000     1
@@ -23,8 +23,8 @@ void io_out8(int port, int data);
 int io_load_eflags(void);
 void io_store_eflags(int eflags);
 
-/* ŠÖ”éŒ¾‚È‚Ì‚ÉA{}‚ª‚È‚­‚Ä‚¢‚«‚È‚è;‚ğ‘‚­‚ÆA
-	‘¼‚Ìƒtƒ@ƒCƒ‹‚É‚ ‚é‚©‚ç‚æ‚ë‚µ‚­‚ËA‚Æ‚¢‚¤ˆÓ–¡‚É‚È‚é‚Ì‚Å‚·B */
+/* é–¢æ•°å®£è¨€ãªã®ã«ã€{}ãŒãªãã¦ã„ããªã‚Š;ã‚’æ›¸ãã¨ã€
+	ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚ã‚‹ã‹ã‚‰ã‚ˆã‚ã—ãã­ã€ã¨ã„ã†æ„å‘³ã«ãªã‚‹ã®ã§ã™ã€‚ */
 	
 struct BOOTINFO {
 	char cyls, leds, vmode, reserve;
@@ -60,14 +60,12 @@ void load_idtr(int limit, int addr);
 
 
 
-
-
 void HariMain(void){
 
 	struct BOOTINFO *binfo;
 	
 	binfo = (struct BOOTINFO *) 0x0ff0;
-	init_palette(); /*?’è?F”Â*/
+	init_palette(); /*?å®š?è‰²æ¿*/
 	init_screen(binfo -> vram, binfo -> scrnx, binfo -> scrny);
 
 
@@ -79,7 +77,7 @@ void HariMain(void){
 	char mcursor[256];
 	int mx, my;
 	
-	mx = (binfo->scrnx - 16) / 2; /* «‘l?’u˜°‰æ–Ê’†‰› */
+	mx = (binfo->scrnx - 16) / 2; /* å°†é¼ ?ç½®äºç”»é¢ä¸­å¤® */
 	my = (binfo->scrny - 28 - 16) / 2;
 	
 	inint_mouse_cursor8(mcursor, COL8_008484);
@@ -106,22 +104,22 @@ void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, i
 void init_palette(void) {
 	
 	static unsigned char table_rgb[16 * 3] = {
-        0x00, 0x00, 0x00,   /*  0:üK */
-        0xff, 0x00, 0x00,   /*  1:—º? */
-        0x00, 0xff, 0x00,   /*  2:—º? */
-        0xff, 0xff, 0x00,   /*  3:—º‰© */
-        0x00, 0x00, 0xff,   /*  4:—º? */
-        0xff, 0x00, 0xff,   /*  5:—º‡ */
-        0x00, 0xff, 0xff,   /*  6:ó—º? */
-        0xff, 0xff, 0xff,   /*  7:”’ */
-        0xc6, 0xc6, 0xc6,   /*  8:—ºŠD */
-        0x84, 0x00, 0x00,   /*  9:ˆÃ? */
-        0x00, 0x84, 0x00,   /* 10:ˆÃ? */
-        0x84, 0x84, 0x00,   /* 11:ˆÃ‰© */
-        0x00, 0x00, 0x84,   /* 12:ˆÃÂ */
-        0x84, 0x00, 0x84,   /* 13:ˆÃ‡ */
-        0x00, 0x84, 0x84,   /* 14:óˆÃ? */
-        0x84, 0x84, 0x84    /* 15:ˆÃŠD */
+        0x00, 0x00, 0x00,   /*  0:é»‘ */
+        0xff, 0x00, 0x00,   /*  1:äº®? */
+        0x00, 0xff, 0x00,   /*  2:äº®? */
+        0xff, 0xff, 0x00,   /*  3:äº®é»„ */
+        0x00, 0x00, 0xff,   /*  4:äº®? */
+        0xff, 0x00, 0xff,   /*  5:äº®ç´« */
+        0x00, 0xff, 0xff,   /*  6:æµ…äº®? */
+        0xff, 0xff, 0xff,   /*  7:ç™½ */
+        0xc6, 0xc6, 0xc6,   /*  8:äº®ç° */
+        0x84, 0x00, 0x00,   /*  9:æš—? */
+        0x00, 0x84, 0x00,   /* 10:æš—? */
+        0x84, 0x84, 0x00,   /* 11:æš—é»„ */
+        0x00, 0x00, 0x84,   /* 12:æš—é’ */
+        0x84, 0x00, 0x84,   /* 13:æš—ç´« */
+        0x00, 0x84, 0x84,   /* 14:æµ…æš—? */
+        0x84, 0x84, 0x84    /* 15:æš—ç° */
 	};
 	set_palette(0, 15, table_rgb);
 	return;
@@ -129,8 +127,8 @@ void init_palette(void) {
 
 void set_palette(int start, int end, unsigned char * rgb) {
 	int i, eflags;
-	eflags = io_load_eflags(); /*??’†’f?‰Â?u“I?*/
-	io_cli(); /*«’†’f?‰Â?u’u?0,‹Ö~’†’f*/
+	eflags = io_load_eflags(); /*??ä¸­æ–­?å¯?å¿—çš„?*/
+	io_cli(); /*å°†ä¸­æ–­?å¯?å¿—ç½®?0,ç¦æ­¢ä¸­æ–­*/
 	io_out8(0x03c8, start);
 	for(i = start; i <= end; i++) {
 		io_out8(0x03c9, rgb[0] / 4);
@@ -138,7 +136,7 @@ void set_palette(int start, int end, unsigned char * rgb) {
 		io_out8(0x03c9, rgb[2] / 4);
 		rgb += 3;
 	}
-	io_store_eflags(eflags); /*?Œ´’†’f?‰Â?u*/
+	io_store_eflags(eflags); /*?åŸä¸­æ–­?å¯?å¿—*/
 	return;
 }
 
@@ -182,8 +180,8 @@ void putfont8(char *vram, int xsize, int x, int y, char c, char *font){
 }
 
 // ASCII ??
-// š•„‹ø“s¥ˆÈ0x00?”ö“I
-// g—p*sA‰ÂˆÈ?æš•„??
+// å­—ç¬¦ä¸²éƒ½æ˜¯ä»¥0x00?å°¾çš„
+// ä½¿ç”¨*så°±å¯ä»¥?å–å­—ç¬¦??
 void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s) {
 	extern char hankaku[4096];
 	for (; *s != 0x00; s++) {
@@ -193,9 +191,9 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s
 	return;
 }
 
-// bc¥”wŒi?F
+// bcæ˜¯èƒŒæ™¯?è‰²
 void inint_mouse_cursor8(char *mouse, char bc) {
-	// y?‘l?w?
+	// å‡†?é¼ ?æŒ‡?
 	static char cursor[16][16] = {
         "**************..",
         "*OOOOOOOOOOO*...",
@@ -234,10 +232,10 @@ void inint_mouse_cursor8(char *mouse, char bc) {
 }
 
 /*
-	1.vram˜avxsize¥?˜°VRAM“IM‘§, ‘¼?“I?•ª?¥0xa0000˜a320
-	2.pxsize˜apysize¥‘z—v?¦“I?Œ`‘å¬, ‘l?w?‘å¬¥16 * 16, ŠˆÈ??˜¢?–ç¥
-	3.px0˜apy0¥w’è?Œ`İ‰æ–Êã?¦“IˆÊ’u
-	4.buf˜abxsize•ª?w’è?Œ`“I‘¶•ú’nš¬˜a?ˆêsŠÜ—L“I‘œ‘f”
+	1.vramå’Œvxsizeæ˜¯?äºVRAMçš„ä¿¡æ¯, ä»–?çš„?åˆ†?æ˜¯0xa0000å’Œ320
+	2.pxsizeå’Œpysizeæ˜¯æƒ³è¦?ç¤ºçš„?å½¢å¤§å°, é¼ ?æŒ‡?å¤§å°æ˜¯16 * 16, æ‰€ä»¥??ä¸ª?ä¹Ÿæ˜¯
+	3.px0å’Œpy0æ˜¯æŒ‡å®š?å½¢åœ¨ç”»é¢ä¸Š?ç¤ºçš„ä½ç½®
+	4.bufå’Œbxsizeåˆ†?æŒ‡å®š?å½¢çš„å­˜æ”¾åœ°å€å’Œ?ä¸€è¡Œå«æœ‰çš„åƒç´ æ•°
 	
 */
 void putblock8_8(char *vram, int vxsize, int pxsize, int pysize, int px0, int py0, char *buf, int bxsize) {
@@ -258,21 +256,21 @@ void init_gdtidt(void) {
 	int i;
 	
 	/*
-		‰n‰»GDT global (segment) descriptor table register
+		åˆå§‹åŒ–GDT global (segment) descriptor table register
 	*/	
-	// Š®¬—¹?Š—L8192˜¢’i“I?’èC«›€?“IãŒÀilimit,w’i“Iš?”-1jAŠîš¬ibasejA???ŒÀ“s??0B
+	// å®Œæˆäº†?æ‰€æœ‰8192ä¸ªæ®µçš„?å®šï¼Œå°†å®ƒ?çš„ä¸Šé™ï¼ˆlimit,æŒ‡æ®µçš„å­—?æ•°-1ï¼‰ã€åŸºå€ï¼ˆbaseï¼‰ã€???é™éƒ½??0ã€‚
 	for (i = 0; i < 8192; i++) {
 		set_segmdesc(gdt + i, 0, 0, 0);
 	}
-	// ’i†?1“I’i, ãŒÀ??0xffffffff(4GB), ’nš¬¥0, ‘®«?0x4092
+	// æ®µå·?1çš„æ®µ, ä¸Šé™??0xffffffff(4GB), åœ°å€æ˜¯0, å±æ€§?0x4092
 	set_segmdesc(gdt + 1, 0xffffffff, 0x00000000, 0x4092);
-	// ’i†?2“I’i, ãŒÀ??0x0007ffff(512KB), ’nš¬¥0x280000
+	// æ®µå·?2çš„æ®µ, ä¸Šé™??0x0007ffff(512KB), åœ°å€æ˜¯0x280000
     set_segmdesc(gdt + 2, 0x0007ffff, 0x00280000, 0x409a);
-	// Ø•???Œ¾?GDTR??
+	// å€ŸåŠ©???è¨€?GDTR??
     load_gdtr(0xffff, 0x00270000);
 	
 	/*
-		‰n‰»IDT interrupt descriptor table
+		åˆå§‹åŒ–IDT interrupt descriptor table
 	*/
 	for (i = 0; i < 256; i++) {
 		set_gatedesc(idt + i, 0, 0, 0);
