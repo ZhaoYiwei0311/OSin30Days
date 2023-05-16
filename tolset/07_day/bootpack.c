@@ -1,4 +1,4 @@
-/* bootpack�̃��C�� */
+/* bootpack縺ｮ繝｡繧､繝ｳ */
 
 #include "bootpack.h"
 #include <stdio.h>
@@ -16,18 +16,18 @@ void HariMain(void)
 
 	init_gdtidt();
 	init_pic();
-	io_sti(); /* IDT/PIC�̏��������I������̂�CPU�̊��荞�݋֎~������ */
+	io_sti(); /* IDT/PIC縺ｮ蛻晄悄蛹悶′邨ゅｏ縺｣縺溘�ｮ縺ｧCPU縺ｮ蜑ｲ繧願ｾｼ縺ｿ遖∵ｭ｢繧定ｧ｣髯､ */
 
-	fifo8_init(&keyfifo, 32, keybuf);		// ���n��??
-	fifo8_init(&mousefifo, 128, mousebuf); 	// ���n���l?
-	io_out8(PIC0_IMR, 0xf9); /* PIC1�ƃL�[�{�[�h������(11111001) */
-	io_out8(PIC1_IMR, 0xef); /* �}�E�X������(11101111) */
+	fifo8_init(&keyfifo, 32, keybuf);		// 蛻晏ｧ句喧??
+	fifo8_init(&mousefifo, 128, mousebuf); 	// 蛻晏ｧ句喧鮠�?
+	io_out8(PIC0_IMR, 0xf9); /* PIC1縺ｨ繧ｭ繝ｼ繝懊�ｼ繝峨ｒ險ｱ蜿ｯ(11111001) */
+	io_out8(PIC1_IMR, 0xef); /* 繝槭え繧ｹ繧定ｨｱ蜿ｯ(11101111) */
 
 	init_keyboard();
 
 	init_palette();
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
-	mx = (binfo->scrnx - 16) / 2; /* ��ʒ����ɂȂ�悤�ɍ��W�v�Z */
+	mx = (binfo->scrnx - 16) / 2; /* 逕ｻ髱｢荳ｭ螟ｮ縺ｫ縺ｪ繧九ｈ縺�縺ｫ蠎ｧ讓呵ｨ育ｮ� */
 	my = (binfo->scrny - 28 - 16) / 2;
 	init_mouse_cursor8(mcursor, COL8_008484);
 	putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16);
@@ -62,18 +62,18 @@ void HariMain(void)
 #define PORT_KEYDAT             0x0060
 #define PORT_KEYSTA             0x0064
 #define PORT_KEYCMD             0x0064
-#define KEYSTA_SEND_NOTREADY    0x02 // ��?�p����
-#define KEYCMD_WRITE_MODE       0x60 // �͎�?��w��
-#define KBC_MODE                0x47 // ���p�l?�͎�
+#define KEYSTA_SEND_NOTREADY    0x02 // 豈�?逕ｨ謨ｰ謐ｮ
+#define KEYCMD_WRITE_MODE       0x60 // 讓｡蠑�?螳壽欠莉､
+#define KBC_MODE                0x47 // 蛻ｩ逕ｨ鮠�?讓｡蠑�
 
 void wait_KBC_sendready(void) {
-    /* ����??�T��?�H�y?��? */
-	// �R��??���l?��?�ړ�??�T��?�H, 
-	// �R�@??�T��?�H��?�ړ�CPU��
-	// ���ȗv�擙��?�H?�ڏ�
+    /* 遲牙ｾ�??謗ｧ蛻ｶ?霍ｯ蜃�?螳�? */
+	// 逕ｱ莠�??譏ｯ鮠�?蜈�?謗･蛻ｰ??謗ｧ蛻ｶ?霍ｯ, 
+	// 辟ｶ蜷�??謗ｧ蛻ｶ?霍ｯ蜀�?謗･蛻ｰCPU荳�
+	// 謇莉･隕∝�育ｭ牙ｾ�?霍ｯ?謗･荳�
     for (;;) {
-		// �@��?�ڏ㗹, CPU��??��?0x0064?��?��I�����I
-		// �|�����ʁi�����?�n���I���ʁj??��0
+		// 螯よ棡?謗･荳贋ｺ�, CPU莉�??蜿ｷ?0x0064?謇?蜿也噪謨ｰ謐ｮ逧�
+		// 蛟呈焚隨ｬ莠御ｽ搾ｼ井ｻ惹ｽ惹ｽ�?蟋区焚逧�隨ｬ莠御ｽ搾ｼ�??譏ｯ0
         if ((io_in8(PORT_KEYSTA) & KEYSTA_SEND_NOTREADY) == 0) {
             break;
         }
@@ -82,7 +82,7 @@ void wait_KBC_sendready(void) {
 }
 
 void init_keyboard(void) {
-    /* ���n��??�T��?�H */
+    /* 蛻晏ｧ句喧??謗ｧ蛻ｶ?霍ｯ */
     wait_KBC_sendready();
     io_out8(PORT_KEYCMD, KEYCMD_WRITE_MODE);
     wait_KBC_sendready();
@@ -94,12 +94,12 @@ void init_keyboard(void) {
 #define MOUSECMD_ENABLE         0xf4
 
 void enable_mouse(void) {
-	// �����l?
+	// 豼豢ｻ鮠�?
 	wait_KBC_sendready();
-	// �@�ʉ�??�T��?�H?���w��0xd4�C���꘢�����A�??��?�l?
+	// 螯よ棡蠕??謗ｧ蛻ｶ?霍ｯ?騾∵欠莉､0xd4�ｼ御ｸ倶ｸ荳ｪ謨ｰ謐ｮ蟆ｱ莨夊�ｪ??騾�?鮠�?
     io_out8(PORT_KEYCMD, KEYCMD_SENDTO_MOUSE);
     wait_KBC_sendready();
-	// MOUSECMD_ENABLE�\���ʒmCPU�v�����s�f�n?���l?�w�ߗ�
+	// MOUSECMD_ENABLE陦ｨ遉ｺ騾夂衍CPU隕∵ｺ先ｺ蝉ｸ肴妙蝨ｰ?騾�鮠�?謖�莉､莠�
     io_out8(PORT_KEYDAT, MOUSECMD_ENABLE);
-    return; /* ?���I?,??�T������ԑ���ACK(0xfa)*/
+    return; /* ?蛻ｩ逧�?,??謗ｧ蛻ｶ蜈ｶ莨夊ｿ秘∝屓ACK(0xfa)*/
 }
